@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b9d 0%, #c06c84 25%, #6c5b7b 50%, #355c7d 75%, #2a5298 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating hearts animation */
+        .heart {
+            position: fixed;
+            font-size: 2rem;
+            animation: float 6s infinite ease-in-out;
+            opacity: 0.7;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.7;
+            }
+            25% {
+                transform: translateY(-30px) rotate(5deg) scale(1.1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-15px) rotate(-5deg) scale(0.9);
+                opacity: 0.3;
+            }
+            75% {
+                transform: translateY(-25px) rotate(3deg) scale(1.05);
+                opacity: 0.6;
+            }
+        }
+
+        /* Login Container */
+        .login-container {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            animation: fadeIn 0.6s ease-in, floatLogin 3s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes floatLogin {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .login-container h2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 20px rgba(118, 75, 162, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(118, 75, 162, 0.6);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .error {
+            color: #e74c3c;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            padding: 2rem;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        /* I Love You Animation */
+        .love-text {
+            text-align: center;
+            font-size: 5rem;
+            color: white;
+            margin-bottom: 3rem;
+            font-weight: bold;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 107, 157, 0.6);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 107, 157, 0.6);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(255, 255, 255, 1), 0 0 80px rgba(255, 107, 157, 0.9);
+            }
+        }
+
+        .love-text span {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInWord 1s forwards;
+        }
+
+        @keyframes fadeInWord {
+            to {
+                opacity: 1;
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        /* Menu Container */
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .menu-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.4s;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .menu-card:hover::before {
+            left: 100%;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(118, 75, 162, 0.4);
+        }
+
+        .menu-card h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu-card p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 30px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.5s;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #764ba2;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #764ba2;
+            color: white;
+        }
+
+        .modal-content h2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: all 0.4s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(118, 75, 162, 0.4);
+        }
+
+        @media (max-width: 900px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .gallery-caption {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #764ba2;
+            font-style: italic;
+            font-size: 1.2rem;
+            animation: fadeIn 1s;
+        }
+
+        /* Typing effect */
+        .typing-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #333;
+            margin: 1.5rem 0;
+            text-align: justify;
+            padding: 1.5rem;
+            background: rgba(118, 75, 162, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid #764ba2;
+        }
+
+        /* Spotify Section */
+        .spotify-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 1s;
+        }
+
+        .spotify-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .spotify-embed {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .love-text {
+                font-size: 3rem;
+            }
+
+            .menu-container {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid img {
+                height: 250px;
+            }
+
+            .login-container h2 {
+                font-size: 2rem;
+            }
+
+            .menu-card h3 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts -->
+    <div class="heart" style="top: 10%; left: 10%;">❤️</div>
+    <div class="heart" style="top: 20%; right: 15%; animation-delay: 1s;">💖</div>
+    <div class="heart" style="bottom: 15%; left: 20%; animation-delay: 2s;">💕</div>
+    <div class="heart" style="bottom: 25%; right: 10%; animation-delay: 1.5s;">💗</div>
+    <div class="heart" style="top: 50%; left: 5%; animation-delay: 0.5s;">💓</div>
+    <div class="heart" style="top: 70%; right: 25%; animation-delay: 2.5s;">💝</div>
+    <div class="heart" style="bottom: 40%; left: 15%; animation-delay: 3s;">💘</div>
+
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+        <h2>💕 Welcome 💕</h2>
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Masukkan username">
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Masukkan password">
+        </div>
+        <button class="login-btn" onclick="login()">Login</button>
+        <div class="error" id="errorMsg"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="love-text" id="loveText"></div>
+        
+        <div class="menu-container">
+            <div class="menu-card" onclick="openGallery()">
+                <h3>📸 Me and You</h3>
+                <p>Love</p>
+            </div>
+            
+            <div class="menu-card" onclick="openKataKata()">
+                <h3>💌 Kata Kata</h3>
+                <p>...</p>
+            </div>
+        </div>
+
+        <div class="spotify-section">
+            <h3>🎵 Musik Untuk Kita</h3>
+            <div class="spotify-embed">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/6vP4azTCk053nGL0xAYnVH?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div class="modal" id="galleryModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('galleryModal')">&times;</button>
+            <h2>💕 Galeri Abdan 💕</h2>
+            <div class="gallery-grid">
+                <img src="https://files.catbox.moe/a61qtp.jpg" alt="Abdan 1" onerror="this.src='https://via.placeholder.com/300x280?text=Foto+1'">
+                <img src="https://files.catbox.moe/a61qtp.jpg" alt="Abdan 2" onerror="this.src='https://via.placeholder.com/300x280?text=Foto+2'">
+                <img src="https://files.catbox.moe/a61qtp.jpg" alt="Abdan 3" onerror="this.src='https://via.placeholder.com/300x280?text=Foto+3'">
+            </div>
+            <p class="gallery-caption">
+                Setiap momen bersamamu adalah kenangan terindah ❤️💖✨
+            </p>
+        </div>
+    </div>
+
+    <!-- Kata Kata Modal -->
+    <div class="modal" id="kataKataModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('kataKataModal')">&times;</button>
+            <h2>💌 Ungkapan Cinta</h2>
+            <div class="typing-text" id="typingText"></div>
+        </div>
+    </div>
+
+    <script>
+        const loveMessages = [
+            "Setiap detik bersamamu adalah keajaiban yang tak pernah ku sangka akan ku alami. Kamu adalah jawaban dari doa-doa yang bahkan belum sempat ku ucapkan.",
+            "Di antara jutaan bintang di langit, matamu adalah yang paling bersinar. Di antara jutaan orang di dunia, hanya kamu yang membuat jantungku berdetak lebih cepat.",
+            "Cinta bukan tentang menemukan orang yang sempurna, tapi tentang melihat kesempurnaan dalam ketidaksempurnaan seseorang. Dan aku melihat itu semua dalam dirimu.",
+            "Aku tidak tahu apa yang akan terjadi di masa depan, tapi satu hal yang ku tahu pasti: aku ingin menghabiskan setiap detiknya bersamamu.",
+            "Kamu bukan hanya cinta dalam hidupku, tapi juga alasan mengapa aku percaya bahwa keajaiban itu nyata dan cinta sejati itu ada.",
+            "Setiap kali aku melihatmu tersenyum, dunia terasa lebih indah. Setiap kali aku mendengar suaramu, hari-hariku terasa lebih bermakna.",
+            "Jika cinta adalah pilihan, maka aku akan memilihmu berkali-kali dalam setiap kehidupan. Karena denganmu, aku menemukan rumah di tempat yang paling tidak ku sangka.",
+            "Kamu adalah alasan mengapa aku bangun dengan senyuman setiap pagi dan tertidur dengan kebahagiaan setiap malam. Terima kasih sudah ada dalam hidupku.",
+            "Dalam kamus hidupku, definisi bahagia adalah saat-saat sederhana bersamamu. Tertawa bersama, diam bersama, dan berbagi cerita tentang hari-hari kita.",
+            "Aku mencintaimu bukan karena siapa dirimu, tapi karena siapa diriku saat aku bersamamu. Kamu membuat versi terbaik dari diriku muncul ke permukaan.",
+            "Cinta kita mungkin tidak sempurna, tapi itulah yang membuatnya nyata. Karena cinta sejati bukan tentang kesempurnaan, tapi tentang menerima dan tumbuh bersama."
+        ];
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (username === 'abdan' && password === 'abdan123') {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                animateLoveText();
+            } else {
+                errorMsg.textContent = '❌ Username atau password salah!';
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function animateLoveText() {
+            const words = ['I', 'Love', 'You'];
+            const loveTextElement = document.getElementById('loveText');
+            loveTextElement.innerHTML = '';
+
+            words.forEach((word, index) => {
+                setTimeout(() => {
+                    const span = document.createElement('span');
+                    span.textContent = word;
+                    span.style.animationDelay = `${index * 0.5}s`;
+                    loveTextElement.appendChild(span);
+                    if (index < words.length - 1) {
+                        loveTextElement.appendChild(document.createTextNode(' '));
+                    }
+                }, index * 500);
+            });
+        }
+
+        function openGallery() {
+            document.getElementById('galleryModal').style.display = 'flex';
+        }
+
+        let currentMessageIndex = 0;
+
+        function openKataKata() {
+            const modal = document.getElementById('kataKataModal');
+            modal.style.display = 'flex';
+            
+            const typingTextElement = document.getElementById('typingText');
+            typingTextElement.textContent = '';
+            
+            // Tampilkan pesan berurutan, bukan acak
+            const message = loveMessages[currentMessageIndex];
+            typeWriter(message, typingTextElement, 0);
+            
+            // Pindah ke pesan berikutnya untuk pembukaan selanjutnya
+            currentMessageIndex = (currentMessageIndex + 1) % loveMessages.length;
+        }
+
+        function typeWriter(text, element, index) {
+            if (index < text.length) {
+                element.textContent += text.charAt(index);
+                setTimeout(() => typeWriter(text, element, index + 1), 50);
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const galleryModal = document.getElementById('galleryModal');
+            const kataKataModal = document.getElementById('kataKataModal');
+            
+            if (event.target === galleryModal) {
+                galleryModal.style.display = 'none';
+            }
+            if (event.target === kataKataModal) {
+                kataKataModal.style.display = 'none';
+            }
+        }
+
+        // Allow Enter key to login
+        document.getElementById('password').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                login();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -568,20 +568,6 @@
             "Aku mencintaimu bukan karena siapa dirimu, tapi karena siapa diriku saat aku bersamamu. Kamu membuat versi terbaik dari diriku muncul ke permukaan.",
             "Cinta kita mungkin tidak sempurna, tapi itulah yang membuatnya nyata. Karena cinta sejati bukan tentang kesempurnaan, tapi tentang menerima dan tumbuh bersama."
         ];
-
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
-
-            if (username === 'nasya' && password === '121025') {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-                animateLoveText();
-            } else {
-                errorMsg.textContent = '❌ Username atau password salah!';
-                errorMsg.style.display = 'block';
-            }
         }
 
         function animateLoveText() {
